@@ -40,8 +40,7 @@ const SignUpForm = () => {
 
     try {
       const { user } = await createAuthUserWithEmailAndPassword(formFields.email, formFields.password)
-      console.log(user)
-      // await createUserDocumentFromAuth(userAuth)
+
       await createUserDocumentFromAuth(user, { displayName })
 
       resetFormFields()
@@ -51,7 +50,6 @@ const SignUpForm = () => {
       } else {
         console.log(`Error occurred with message: ${e.message}`)
       }
-
     }
   }
 
