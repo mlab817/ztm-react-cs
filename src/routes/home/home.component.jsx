@@ -1,5 +1,8 @@
 import Directory from "../../components/directory/directory.component";
 import { Outlet } from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import Button from "../../components/button/button.component";
 
 const Home = () => {
   const categories = [
