@@ -33,51 +33,11 @@ const Home = () => {
     }
   ]
 
-  const [pageCount, setPageCount] = useState(null)
-  const [pageNumber, setPageNumber] = useState(1)
-  const [meetings, setMeetings] = useState([])
-
-  const url = 'https://my-zoom-api.herokuapp.com/api/zoom/meetings'
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(url, {
-        page_number: pageNumber
-      })
-      const { meetings, page_count } = response.data.data
-
-      setMeetings(meetings)
-      setPageCount(page_count)
-    }
-
-    console.log('calling axios useEffect')
-
-    fetchData()
-  }, [pageNumber])
-
-  console.log(meetings, pageNumber)
-
-  const incrementPage = () => {
-    if (pageCount && pageNumber < pageCount) {
-      setPageNumber(pageNumber + 1)
-    }
-  }
-
-  const decrementPage = () => {
-    if (pageCount > 1) {
-      setPageNumber(pageNumber - 1)
-    }
-  }
-
   return (
     <>
       <Outlet />
 
       <Directory categories={categories} />
-
-      <Button onClick={decrementPage} disabled={pageNumber === 1}>Previous Page</Button>
-
-      <Button onClick={incrementPage} disabled={pageCount === pageNumber}>Next Page</Button>
     </>
   )
 }
