@@ -31,6 +31,9 @@ const CheckoutItem = ({ cartItem }) => {
         </div>
       </span>
       <span className="price">{price}</span>
+      <span className="item-total">
+        { (price * quantity).toLocaleString() }
+      </span>
       <div className="remove-button" onClick={clearItemHandler}>&#10005;</div>
     </div>
   )
