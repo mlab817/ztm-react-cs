@@ -6,6 +6,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - ReactJS
 - React Router
-- React Redux
+- React Redux (including redux-persist and redux-saga)
 - Styled Components
 - Firebase
+- Continuous Deployment using Github Actions
+- Deployment on Netlify
