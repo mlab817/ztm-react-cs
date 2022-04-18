@@ -30,7 +30,7 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-const firebaseApp = initializeApp(firebaseConfig)
+export const firebaseApp = initializeApp(firebaseConfig)
 
 const googleProvider = new GoogleAuthProvider()
 
@@ -38,11 +38,11 @@ googleProvider.setCustomParameters({
   prompt: 'select_account'
 })
 
-const auth = getAuth()
+export const auth = getAuth()
 
-const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 
-const db = getFirestore()
+export const db = getFirestore()
 
 export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
   const collectionRef = collection(db, collectionKey)
@@ -66,7 +66,7 @@ export const getCategoriesAndDocuments = async () => {
   return querySnapshot.docs.map(docSnapshot => docSnapshot.data())
 }
 
-const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
   if (!userAuth) return
 
   const userDocRef = doc(db, 'users', userAuth.uid)
@@ -90,33 +90,30 @@ const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) 
     }
   }
 
-  return userDocRef
+  return userSnapshot
 }
 
-const createAuthUserWithEmailAndPassword = async (email, password) => {
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return
 
   return await createUserWithEmailAndPassword(auth, email, password)
 }
 
-const signInAuthUserWithEmailAndPassword = async (email, password) => {
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return
 
   return await signInWithEmailAndPassword(auth, email, password)
 }
 
-const signOutUser = async () => await signOut(auth)
+export const signOutUser = async () => await signOut(auth)
 
-const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback)
+export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback)
 
-export {
-  firebaseApp,
-  db,
-  auth,
-  signInWithGooglePopup,
-  createUserDocumentFromAuth,
-  createAuthUserWithEmailAndPassword,
-  signInAuthUserWithEmailAndPassword,
-  signOutUser,
-  onAuthStateChangedListener
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
+      unsubscribe()
+      resolve(userAuth)
+    }, reject)
+  })
 }
