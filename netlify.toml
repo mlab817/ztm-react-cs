@@ -1,12 +1,8 @@
 [dev]
-  command = "yarn start"
-  port = 8888
-  targetPort = 3000
-  publish = "dist"
-  jwtRolePath = "app_metadata.authorization.roles"
-  jwtSecret = "MY_JWT_SECRET_VALUE"
+	command = "yarn start"
+#   port = 3000
+#   targetPort = 3000
+  publish = "build"
   autoLaunch = true
-  framework = "#custom"
-#   [dev.https]
-#     certFile = "cert.pem"
-#     keyFile = "key.pem"
+#   framework = "#custom"
+	functions = "netlify/functions"
