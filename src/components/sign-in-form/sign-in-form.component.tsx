@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 
 import { googleSignInStart } from "../../store/user/user.action";
@@ -8,6 +8,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import Button, { BUTTON_TYPES_CLASSES } from "../button/button.component";
+
 import FormInput from "../form-input/form-input.component";
 
 import { SignInContainer, ButtonsContainer} from "./sign-in-form.styles";
@@ -26,7 +27,7 @@ const SignInForm = () => {
     setFormFields(defaultFormFields)
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setFormFields({...formFields, [name]: value})
   }
@@ -35,24 +36,25 @@ const SignInForm = () => {
     dispatch(googleSignInStart())
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     try {
       await signInAuthUserWithEmailAndPassword(email, password)
 
       resetFormFields()
-    } catch (err) {
-      switch(err.code) {
-        case 'auth/wrong-password':
-          alert('incorrect password for email')
-          break
-        case 'auth/user-not-found':
-          alert('no user associated with this email')
-          break
-        default:
-          console.log(`Error occurred with message: ${err.message}`)
-      }
+    } catch (error) {
+      console.log(`Error signing in: `, error)
+      // switch(err.code) {
+      //   case 'auth/wrong-password':
+      //     alert('incorrect password for email')
+      //     break
+      //   case 'auth/user-not-found':
+      //     alert('no user associated with this email')
+      //     break
+      //   default:
+      //     console.log(`Error occurred with message: ${err.message}`)
+      // }
     }
   }
 

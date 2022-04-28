@@ -1,4 +1,5 @@
-import { useState } from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
+import { AuthError, AuthErrorCodes } from 'firebase/auth'
 
 import FormInput from "../form-input/form-input.component";
 
@@ -24,12 +25,12 @@ const SignUpForm = () => {
     setFormFields(defaultFormFields)
   }
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setFormFields({...formFields, [name]: value})
   }
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     if (password !== confirmPassword) {
@@ -39,12 +40,11 @@ const SignUpForm = () => {
 
     try {
       dispatch(signUpStart(email, password, displayName))
-    } catch (e) {
-      if (e.code === 'auth/email-already-in-use') {
+    } catch (error) {
+      if ((error as AuthError).code === AuthErrorCodes.EMAIL_EXISTS) {
         alert('cannot create. email already in use')
-        resetFormFields()
       } else {
-        console.log(`Error occurred with message: ${e.message}`)
+        console.log(`Error occurred with message: `, error)
       }
     }
   }
