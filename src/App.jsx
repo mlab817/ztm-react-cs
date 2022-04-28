@@ -1,16 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Routes, Route } from 'react-router-dom'
 import { useDispatch } from "react-redux";
 import { checkUserSession } from "./store/user/user.action";
 
-import Home from "./routes/home/home.component";
-import Shop from "./routes/shop/shop.component";
+// fallback must be synchronous
+import Spinner from "./components/spinner/spinner.component";
 
-import Navigation from "./routes/navigation/navigation.component";
-import Authentication from "./routes/sign-in/authentication.component";
-import Checkout from "./routes/checkout/checkout.component";
-import ProtectedRoute from "./components/protected-route/protected-route.component";
-import PublicRoute from "./components/public-route/public-route.component";
+const ProtectedRoute = lazy(() => import("./components/protected-route/protected-route.component"));
+const PublicRoute = lazy(() => import("./components/public-route/public-route.component"));
+
+const Shop = lazy(() => import("./routes/shop/shop.component"));
+const Navigation = lazy(() => import( "./routes/navigation/navigation.component"));
+const Home = lazy(() => import("./routes/home/home.component"));
+const Checkout = lazy(() => import("./routes/checkout/checkout.component"));
+const Authentication = lazy(() => import("./routes/sign-in/authentication.component"));
 
 const App = () => {
   const dispatch = useDispatch()
@@ -20,18 +23,20 @@ const App = () => {
   }, [dispatch])
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigation />}>
-        <Route element={<ProtectedRoute />}>
-          <Route index element={<Home />} />
-          <Route path="shop/*" element={<Shop />} />
-          <Route path="checkout" element={<Checkout />} />
+    <Suspense fallback={<Spinner />}>
+      <Routes>
+        <Route path="/" element={<Navigation />}>
+          <Route element={<ProtectedRoute />}>
+            <Route index element={<Home />} />
+            <Route path="shop/*" element={<Shop />} />
+            <Route path="checkout" element={<Checkout />} />
+          </Route>
+          <Route element={<PublicRoute />}>
+            <Route path="auth" element={<Authentication />} />
+          </Route>
         </Route>
-        <Route element={<PublicRoute />}>
-          <Route path="auth" element={<Authentication />} />
-        </Route>
-      </Route>
-    </Routes>
+      </Routes>
+    </Suspense>
   )
 }
 

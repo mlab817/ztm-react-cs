@@ -1,12 +1,11 @@
-import { useEffect } from "react";
+import {lazy, useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-
-import CategoriesPreview from "../categories-preview/categories-preview.component";
-
-import Category from "../category/category.component";
-
 import { fetchCategoriesStart } from "../../store/categories/categories.action";
+
+const CategoriesPreview = lazy(() => import("../categories-preview/categories-preview.component"));
+
+const Category = lazy(() => import("../category/category.component"));
 
 const Shop = () => {
   const dispatch = useDispatch()
