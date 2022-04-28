@@ -2,7 +2,8 @@ import { useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
 
-import './sign-up-form.styles.scss'
+import { SignUpContainer } from "./sign-up-form.styles";
+
 import Button from "../button/button.component";
 import {useDispatch} from "react-redux";
 import {signUpStart} from "../../store/user/user.action";
@@ -41,6 +42,7 @@ const SignUpForm = () => {
     } catch (e) {
       if (e.code === 'auth/email-already-in-use') {
         alert('cannot create. email already in use')
+        resetFormFields()
       } else {
         console.log(`Error occurred with message: ${e.message}`)
       }
@@ -48,7 +50,7 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="sign-up-container">
+    <SignUpContainer>
       <h2>Don't have an account?</h2>
 
       <span>Sign up with your email and password</span>
@@ -64,7 +66,7 @@ const SignUpForm = () => {
 
         <Button type="submit">Sign Up</Button>
       </form>
-    </div>
+    </SignUpContainer>
   )
 }
 

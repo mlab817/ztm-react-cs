@@ -8,8 +8,6 @@ import Category from "../category/category.component";
 
 import { fetchCategoriesStart } from "../../store/categories/categories.action";
 
-import './shop.styles.scss'
-
 const Shop = () => {
   const dispatch = useDispatch()
 

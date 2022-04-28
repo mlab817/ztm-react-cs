@@ -1,7 +1,16 @@
-import { createSelector } from "reselect";
+import {
+  createSelector
+} from "reselect";
+import {
+  CategoriesState
+} from "./categories.reducer";
+import {
+  CategoryMap
+} from "./categories.types";
+import {RootState} from "../store";
 
 // cache the current value
-const selectCategoryReducer = (state) => state.categories
+const selectCategoryReducer = (state: RootState): CategoriesState => state.categories;
 
 // as long as the above does not change, this will not trigger
 export const selectCategories = createSelector(
@@ -12,11 +21,11 @@ export const selectCategories = createSelector(
 // as long as the above does not change, this will not trigger
 export const selectCategoriesMap = createSelector(
   [selectCategories],
-  (categories) => categories.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot
+  (categories): CategoryMap => categories.reduce((acc, docSnapshot) => {
+    const {title, items} = docSnapshot
     acc[title.toLowerCase()] = items
     return acc
-  }, {})
+  }, {} as CategoryMap)
 )
 
 export const selectCategoriesIsLoading = createSelector(
