@@ -21,7 +21,7 @@ type ExtendedPersistConfig = PersistConfig<RootState> & {
   whitelist: (keyof RootState)[]
 }
 
-const persistConfig = {
+const persistConfig: ExtendedPersistConfig = {
   key: 'root',
   storage,
   whitelist: ['cart']

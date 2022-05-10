@@ -46,6 +46,7 @@ const SignUpForm = () => {
       } else {
         console.log(`Error occurred with message: `, error)
       }
+      resetFormFields()
     }
   }
 
