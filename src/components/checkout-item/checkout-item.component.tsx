@@ -14,7 +14,13 @@ import {
   BaseSpan
 } from "./checkout-item.styles";
 
-const CheckoutItem = ({ cartItem }) => {
+import {CartItem} from "../../store/cart/cart.types";
+
+type CartItemProps = {
+  cartItem: CartItem
+}
+
+const CheckoutItem = ({ cartItem }: CartItemProps) => {
   const dispatch = useDispatch()
 
   const { name, imageUrl, price, quantity } = cartItem

@@ -6,6 +6,7 @@ import {selectCartItems, selectCartTotal} from "../../store/cart/cart.selector";
 import {
   CheckoutContainer, CheckoutHeader, HeaderBlock, Total
 } from './checkout.styles'
+
 import PaymentForm from "../../components/payment-form/payment-form.component";
 
 const Checkout = () => {

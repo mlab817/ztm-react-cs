@@ -11,8 +11,11 @@ import {
   CartItems,
   EmptyMessage
 } from "./cart-dropdown.styles";
+
 import {useSelector} from "react-redux";
+
 import {selectCartItems} from "../../store/cart/cart.selector";
+
 import {useCallback} from "react";
 
 const CartDropdown = () => {
